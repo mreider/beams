@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-txn-server
+  name: mongodb
 spec:
   selector:
-    app: mongodb-txn-server
+    app: mongodb
     env: test
   ports:
   - port: 27017
@@ -14,19 +14,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb-txn-server   
+  name: mongodb   
   labels:
-    app: mongodb-txn-server
+    app: mongodb
     env: test
 spec: 
   selector:
     matchLabels:
-      app: mongodb-txn-server
+      app: mongodb
   replicas: 1
   template:  
     metadata:
       labels:
-        app: mongodb-txn-server
+        app: mongodb
     spec:
       containers: 
         - name: mongo
@@ -59,21 +59,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: transaction-server
+  name: transactions
   labels:
-    app: transaction-server
+    app: transactions
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: transaction-server
+      app: transactions
   template:
     metadata:
       labels:
-        app: transaction-server
+        app: transactions
     spec:
       containers:
-      - name: transaction-server
+      - name: transactions
         image: ghcr.io/mreider/beam/beam:latest
         resources:
           requests:
@@ -87,26 +87,26 @@ spec:
             - "transactionServer.js"
         ports:
         - containerPort: 3000
-          name: transaction-server
+          name: transactions
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: calculation-server
+  name: calculations
   labels:
-    app: calculation-server
+    app: calculations
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: calculation-server
+      app: calculations
   template:
     metadata:
       labels:
-        app: calculation-server
+        app: calculations
     spec:
       containers:
-      - name: calculation-server
+      - name: calculations
         image: ghcr.io/mreider/beam/beam:latest
         command:
           - node
@@ -120,26 +120,26 @@ spec:
             cpu: 100m
         ports:
         - containerPort: 3000
-          name: calculation-server
+          name: calculations
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: confirmation-server
+  name: confirmations
   labels:
-    app: confirmation-server
+    app: confirmations
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: confirmation-server
+      app: confirmations
   template:
     metadata:
       labels:
-        app: confirmation-server
+        app: confirmations
     spec:
       containers:
-      - name: confirmation-server
+      - name: confirmations
         image: ghcr.io/mreider/beam/beam:latest
         command:
           - node
@@ -153,26 +153,26 @@ spec:
             cpu: 100m
         ports:
         - containerPort: 3000
-          name: confirmation-server
+          name: confirmations
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: resolution-server
+  name: resolutions
   labels:
-    app: resolution-server
+    app: resolutions
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: resolution-server
+      app: resolutions
   template:
     metadata:
       labels:
-        app: resolution-server
+        app: resolutions
     spec:
       containers:
-      - name: resolution-server
+      - name: resolutions
         image: ghcr.io/mreider/beam/beam:latest
         command:
           - node
@@ -186,52 +186,52 @@ spec:
             cpu: 100m
         ports:
         - containerPort: 3000
-          name: resolution-server
+          name: resolutions
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: resolution-server
+  name: resolutions
 spec:
   ports:
   - name: api
     port: 3000
     targetPort: 3000
   selector:
-    app: resolution-server
+    app: resolutions
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: calculation-server
+  name: calculations
 spec:
   ports:
   - name: api
     port: 3000
     targetPort: 3000
   selector:
-    app: calculation-server
+    app: calculations
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: confirmation-server
+  name: confirmations
 spec:
   ports:
   - name: api
     port: 3000
     targetPort: 3000
   selector:
-    app: confirmation-server
+    app: confirmations
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: transaction-server
+  name: transactions
 spec:
   ports:
   - name: api
     port: 3000
     targetPort: 3000
   selector:
-    app: transaction-server
+    app: transactions
