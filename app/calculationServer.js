@@ -19,7 +19,7 @@ app.post('/calculation', (req, res) => {
     })
     rp({
      method: 'POST',
-     uri: 'http://resolution-server:3000' +'/resolution',
+     uri: 'http://resolutions:3000' +'/resolution',
      body: {
          payload : uuid.v4()
      }

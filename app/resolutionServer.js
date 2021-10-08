@@ -17,7 +17,7 @@ app.post('/resolution', (req, res) => {
     })
     rp({
         method: 'POST',
-        uri: 'http://confirm-server:3000' +'/confirmation',
+        uri: 'http://confirmations:3000' +'/confirmation',
         body: {
             payload : uuid.v4()
         }

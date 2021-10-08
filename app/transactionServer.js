@@ -9,7 +9,7 @@ app.use(express.json())
 app.get('/calculate', (req, res) => {
     rp({
         method: 'POST',
-        uri: 'http://calculation-server:3000' +'/calculation',
+        uri: 'http://calculations:3000' +'/calculation',
         body: {
             payload : uuid.v4()
         }
