@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-require("dotenv").config();
-mongoose.connect(process.env.MONGO_URI, { 
+mongoose.connect("mongodb-txn-server:27017", { 
      useNewUrlParser: true,
      useUnifiedTopology: true
 })

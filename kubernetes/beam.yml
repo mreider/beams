@@ -1,0 +1,237 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-txn-server
+spec:
+  selector:
+    app: mongodb-txn-server
+    env: test
+  ports:
+  - port: 27017
+    targetPort: 27017 
+    protocol: TCP
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-txn-server   
+  labels:
+    app: mongodb-txn-server
+    env: test
+spec: 
+  selector:
+    matchLabels:
+      app: mongodb-txn-server
+  replicas: 1
+  template:  
+    metadata:
+      labels:
+        app: mongodb-txn-server
+    spec:
+      containers: 
+        - name: mongo
+          resources:  
+            requests:    
+              cpu: 50m
+              memory: 50Mi
+            limits:    
+              cpu: 100m
+              memory: 100Mi
+          image: mongo:4.0.9
+          command:
+            - mongod
+            - "--bind_ip"
+            - "0.0.0.0"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 27017
+              name: mongo
+              hostPort: 27017
+              protocol: TCP
+          volumeMounts:
+              - mountPath: /data/db
+                name: mongodb-volume
+      volumes:
+        - name: mongodb-volume
+          hostPath:
+            path: /home/debian/mongodb 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-server
+  labels:
+    app: transaction-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-server
+  template:
+    metadata:
+      labels:
+        app: transaction-server
+    spec:
+      containers:
+      - name: transaction-server
+        image: ghcr.io/mreider/beam/beam:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 32Mi
+          limits:
+            memory: 64Mi
+            cpu: 100m
+        command:
+            - node
+            - "transactionServer.js"
+        ports:
+        - containerPort: 3000
+          name: transaction-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculation-server
+  labels:
+    app: calculation-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calculation-server
+  template:
+    metadata:
+      labels:
+        app: calculation-server
+    spec:
+      containers:
+      - name: calculation-server
+        image: ghcr.io/mreider/beam/beam:latest
+        command:
+          - node
+          - "calculationServer.js"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 32Mi
+          limits:
+            memory: 64Mi
+            cpu: 100m
+        ports:
+        - containerPort: 3000
+          name: calculation-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: confirmation-server
+  labels:
+    app: confirmation-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: confirmation-server
+  template:
+    metadata:
+      labels:
+        app: confirmation-server
+    spec:
+      containers:
+      - name: confirmation-server
+        image: ghcr.io/mreider/beam/beam:latest
+        command:
+          - node
+          - "confirmationServer.js"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 32Mi
+          limits:
+            memory: 64Mi
+            cpu: 100m
+        ports:
+        - containerPort: 3000
+          name: confirmation-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resolution-server
+  labels:
+    app: resolution-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resolution-server
+  template:
+    metadata:
+      labels:
+        app: resolution-server
+    spec:
+      containers:
+      - name: resolution-server
+        image: ghcr.io/mreider/beam/beam:latest
+        command:
+          - node
+          - "resolutionServer.js"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 32Mi
+          limits:
+            memory: 64Mi
+            cpu: 100m
+        ports:
+        - containerPort: 3000
+          name: resolution-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resolution-server
+spec:
+  ports:
+  - name: api
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: resolution-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calculation-server
+spec:
+  ports:
+  - name: api
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: calculation-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: confirmation-server
+spec:
+  ports:
+  - name: api
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: confirmation-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-server
+spec:
+  ports:
+  - name: api
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: transaction-server
