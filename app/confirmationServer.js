@@ -1,7 +1,8 @@
 const express = require('express');
-app.use(express.json())
 const port = 3000;
+const app = express();
 app.use(express.json())
+
 
 app.post('/confirmation', (req, res) => {
     console.log(`confirmation accepted`);
