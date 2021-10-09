@@ -12,8 +12,8 @@ app.get('/calculate', (req, res) => {
         uri: 'http://calculations:3000' +'/calculation',
         body: {
             payload : uuid.v4()
-        }
-                });
+            }
+        });
  })
 
  app.listen(port, () => {
