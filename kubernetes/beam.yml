@@ -30,13 +30,6 @@ spec:
     spec:
       containers: 
         - name: mongo
-          resources:  
-            requests:    
-              cpu: 50m
-              memory: 50Mi
-            limits:    
-              cpu: 100m
-              memory: 100Mi
           image: mongo:4.0.9
           command:
             - mongod
@@ -74,7 +67,7 @@ spec:
     spec:
       containers:
       - name: transactions
-        image: ghcr.io/mreider/beams/beams:latest
+        image: ghcr.io/mreider/beams:latest
         resources:
           requests:
             cpu: 100m
@@ -107,7 +100,7 @@ spec:
     spec:
       containers:
       - name: calculations
-        image: ghcr.io/mreider/beams/beams:latest
+        image: ghcr.io/mreider/beams:latest
         command:
           - node
           - "calculationServer.js"
@@ -140,7 +133,7 @@ spec:
     spec:
       containers:
       - name: confirmations
-        image: ghcr.io/mreider/beams/beams:latest
+        image: ghcr.io/mreider/beams:latest
         command:
           - node
           - "confirmationServer.js"
@@ -173,7 +166,7 @@ spec:
     spec:
       containers:
       - name: resolutions
-        image: ghcr.io/mreider/beams/beams:latest
+        image: ghcr.io/mreider/beams:latest
         command:
           - node
           - "resolutionServer.js"
