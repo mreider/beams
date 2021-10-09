@@ -6,4 +6,6 @@ function sendTransaction() {
     });
 }
 
-setInterval(sendTransaction(),1000);
+setInterval(function(){
+    sendTransaction();
+    },1000);
