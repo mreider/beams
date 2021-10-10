@@ -1,4 +1,4 @@
-const request = require('request-promise');
+const request = require('request');
 const uuid = require('uuid');
 var uuid_instance = uuid.v4();
 
