@@ -1,53 +1,49 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongodb
-spec:
-  selector:
-    app: mongodb
-    env: test
-  ports:
-  - port: 27017
-    targetPort: 27017 
-    protocol: TCP
---- 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb   
+  name: mongo
   labels:
-    app: mongodb
-    env: test
-spec: 
+    app.kubernetes.io/name: mongo
+    app.kubernetes.io/component: backend
+spec:
   selector:
     matchLabels:
-      app: mongodb
+      app.kubernetes.io/name: mongo
+      app.kubernetes.io/component: backend
   replicas: 1
-  template:  
+  template:
     metadata:
       labels:
-        app: mongodb
+        app.kubernetes.io/name: mongo
+        app.kubernetes.io/component: backend
     spec:
-      containers: 
-        - name: mongo
-          image: mongo:4.0.9
-          command:
-            - mongod
-            - "--bind_ip"
-            - "0.0.0.0"
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 27017
-              name: mongo
-              hostPort: 27017
-              protocol: TCP
-          volumeMounts:
-              - mountPath: /data/db
-                name: mongodb-volume
-      volumes:
-        - name: mongodb-volume
-          hostPath:
-            path: /home/debian/mongodb 
+      containers:
+      - name: mongo
+        image: mongo:4.2
+        args:
+          - --bind_ip
+          - 0.0.0.0
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels:
+    app.kubernetes.io/name: mongo
+    app.kubernetes.io/component: backend
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  selector:
+    app.kubernetes.io/name: mongo
+    app.kubernetes.io/component: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
