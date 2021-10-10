@@ -1,9 +1,9 @@
 const express = require('express');
-const rp = require('request-promise');
+const request = require('request');
 const uuid = require('uuid');
 const app = express();
 const port = 3000;
-
+var uuid_instance = uuid.v4();
 require('./db');
 
 const Calculation = require('./calculate');
@@ -17,13 +17,20 @@ app.post('/calculation', (req, res) => {
     }).catch((err) => {
          res.status(500).send('internal Server Error');
     })
-    rp({
-     method: 'POST',
-     uri: 'http://resolutions:3000' +'/resolution',
-     body: {
-         payload : uuid.v4()
-     }
-     });
+    res.sendStatus(200);
+        request.post(
+            'http://resolutions:3000' + '/resolution',
+            { json: { payload: uuid_instance } },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log(body);
+                }
+                else {
+                    console.log(error);
+                }
+            }
+        );
+        console.log('calculated');
 })
 
 app.get('/calculations', (req, res) => {

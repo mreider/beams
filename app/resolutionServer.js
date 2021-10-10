@@ -1,8 +1,9 @@
 const express = require('express');
-const rp = require('request-promise');
+const request = require('request');
 const uuid = require('uuid');
 const app = express();
 const port = 3000;
+var uuid_instance = uuid.v4();
 
 require('./db');
 const Resolution = require('./resolve');
@@ -15,13 +16,20 @@ app.post('/resolution', (req, res) => {
     }).catch((err) => {
          res.status(500).send('internal server error');
     })
-    rp({
-        method: 'POST',
-        uri: 'http://confirmations:3000' +'/confirmation',
-        body: {
-            payload : uuid.v4()
-        }
-        });
+    res.sendStatus(200);
+        request.post(
+            'http://confirmations:3000' + '/confirmation',
+            { json: { payload: uuid_instance } },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log(body);
+                }
+                else {
+                    console.log(error);
+                }
+            }
+        );
+        console.log('confirmed');
 })
 
 app.get('/resolutions', (req, res) => {
