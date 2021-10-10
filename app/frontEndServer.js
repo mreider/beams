@@ -1,9 +1,20 @@
-const rp = require('request-promise');
+const request = require('request-promise');
+const uuid = require('uuid');
+var uuid_instance = uuid.v4();
 
 function sendTransaction() {
-    rp({method: 'GET',
-    uri: 'http://transactions:3000' +'/calculate'
-    });
+    request.post(
+        'http://transactions:3000' + '/calculate',
+        { json: { payload: uuid_instance } },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                console.log(body);
+            }
+            else {
+                console.log(error);
+            }
+        }
+    );
 }
 
 setInterval(function(){
