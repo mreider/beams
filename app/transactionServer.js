@@ -6,7 +6,7 @@ const port = 3000;
 var uuid_instance = uuid.v4();
 app.use(express.json())
 
-app.get('/calculate', (req, res) => {
+app.post('/calculate', (req, res) => {
         res.sendStatus(200);
         request.post(
             'http://calculations:3000' + '/calculation',
