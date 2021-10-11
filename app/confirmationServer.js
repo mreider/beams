@@ -5,7 +5,7 @@ app.use(express.json())
 
 
 app.post('/confirmation', (req, res) => {
-    console.log(`confirmation accepted`);
+    console.log('confirmation accepted');
     res.sendStatus(200);
 })
 

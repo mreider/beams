@@ -17,7 +17,6 @@ app.post('/calculation', (req, res) => {
     }).catch((err) => {
          res.status(500).send('internal Server Error');
     })
-    res.sendStatus(200);
         request.post(
             'http://resolutions:3000' + '/resolution',
             { json: { payload: uuid_instance } },

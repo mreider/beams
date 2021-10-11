@@ -16,7 +16,6 @@ app.post('/resolution', (req, res) => {
     }).catch((err) => {
          res.status(500).send('internal server error');
     })
-    res.sendStatus(200);
         request.post(
             'http://confirmations:3000' + '/confirmation',
             { json: { payload: uuid_instance } },
