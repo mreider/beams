@@ -14,7 +14,6 @@ app.post('/calculation', (req, res) => {
     const lostObjects = [];
     const lostObj = {memory: "leaked"};
     [...Array(300)].map(i => lostObjects.push(lostObj));
-    res.send({size: lostObjects.length})
     const newCalculation = new Calculation({...req.body});
     newCalculation.save().then(() => {
           res.send('new calculation added successfully')

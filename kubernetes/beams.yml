@@ -50,7 +50,7 @@ metadata:
   labels:
     app: transactions
 spec:
-  replicas: 8
+  replicas: 2
   selector:
     matchLabels:
       app: transactions
@@ -83,7 +83,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 15
+  replicas: 2
   selector:
     matchLabels:
       app: frontend
@@ -116,8 +116,7 @@ metadata:
   labels:
     app: calculations
 spec:
-  priorityClassName: high-priority
-  replicas: 15
+  replicas: 3
   selector:
     matchLabels:
       app: calculations
@@ -126,6 +125,7 @@ spec:
       labels:
         app: calculations
     spec:
+      priorityClassName: high-priority
       containers:
       - name: calculations
         image: ghcr.io/mreider/beams:latest
@@ -150,7 +150,7 @@ metadata:
   labels:
     app: confirmations
 spec:
-  replicas: 15
+  replicas: 1
   selector:
     matchLabels:
       app: confirmations
@@ -183,7 +183,7 @@ metadata:
   labels:
     app: resolutions
 spec:
-  replicas: 20
+  replicas: 1
   selector:
     matchLabels:
       app: resolutions
