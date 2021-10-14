@@ -19,4 +19,4 @@ function sendTransaction() {
 
 setInterval(function(){
     sendTransaction();
-    },1000);
+    },550);
