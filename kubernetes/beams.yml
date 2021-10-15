@@ -313,10 +313,10 @@ spec:
       command:
             - node
             - "podkiller.js"
-          resources:
-            requests:
-              cpu: 100m
-              memory: 32Mi
-            limits:
-              memory: 64Mi
-              cpu: 100m
+      resources:
+        requests:
+          cpu: 100m
+          memory: 32Mi
+        limits:
+          memory: 64Mi
+          cpu: 100m
