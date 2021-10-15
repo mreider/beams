@@ -16,7 +16,33 @@ function sendTransaction() {
         }
     );
 }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
-setInterval(function(){
-    sendTransaction();
-    },550);
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+  
+const rndMinutes = randomIntFromInterval(11, 59)
+
+function tick() {
+    //get the mins of the current time
+    var mins = new Date().getMinutes();
+    if (mins == rndMinutes) {
+      loopingCalls();
+    }
+  }
+  
+setInterval(tick, 1000);
+
+function loopingCalls() {
+    for (let step = 0; step < 1000; step++) {
+        await sleep(10);
+        sendTransaction();
+      }
+      console.log('crazy time');
+
+}
+
+setInterval(function(){sendTransaction();},550);
