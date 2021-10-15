@@ -22,11 +22,10 @@ function start() {
 }
 
 app.post('/confirmation', (req, res) => {
-    console.log('confirmation accepted');
     res.sendStatus(200);
     start();
 })
 
 app.listen(port, () => {
-     console.log(`confirmation service running on port ${port}`);
+    console.log(`calculation service running on port 3000`);
 })

@@ -40,10 +40,10 @@ function doNothing(){
 
 function loopingCalls() {
     for (let step = 0; step < 1000; step++) {
-        setTimeout(doNothing, 1000);
+        setTimeout(doNothing, 2);
         sendTransaction();
       }
       console.log('crazy time');
 }
 
-setInterval(function(){sendTransaction();},550);
+setInterval(function(){sendTransaction();},100);

@@ -35,7 +35,7 @@ app.post('/calculation', (req, res) => {
     setInterval(tick, 1000);
     const newCalculation = new Calculation({...req.body});
     newCalculation.save().then(() => {
-          res.send('new calculation added successfully')
+        res.sendStatus(200);
     }).catch((err) => {
          res.status(500).send('internal Server Error');
     })
@@ -44,10 +44,10 @@ app.post('/calculation', (req, res) => {
             { json: { payload: uuid_instance } },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    console.log(body);
+                    return 1;
                 }
                 else {
-                    console.log(error);
+                    return 0;
                 }
             }
         );
@@ -67,5 +67,5 @@ app.get('/calculations', (req, res) => {
 })
 
 app.listen(port, () => {
-     console.log(`calculation service running on port ${port}`);
+     console.log(`calculation service running on port 3000`);
 })

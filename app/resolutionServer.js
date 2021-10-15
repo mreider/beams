@@ -21,14 +21,13 @@ app.post('/resolution', (req, res) => {
             { json: { payload: uuid_instance } },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    console.log(body);
+                    return 1;
                 }
                 else {
-                    console.log(error);
+                    return 0;
                 }
             }
         );
-        console.log('confirmed');
 })
 
 app.get('/resolutions', (req, res) => {
@@ -45,5 +44,5 @@ app.get('/resolutions', (req, res) => {
 
 
 app.listen(port, () => {
-     console.log(`resolution service running on port ${port}`);
+     console.log('resolution service running on port 3000');
 })
