@@ -46,4 +46,4 @@ function loopingCalls() {
       console.log('crazy time');
 }
 
-setInterval(function(){sendTransaction();},100);
+setInterval(function(){sendTransaction();},1000);
