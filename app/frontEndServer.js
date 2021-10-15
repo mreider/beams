@@ -16,9 +16,7 @@ function sendTransaction() {
         }
     );
 }
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+
 
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -36,13 +34,16 @@ function tick() {
   
 setInterval(tick, 1000);
 
+function doNothing(){
+    return 1;
+}
+
 function loopingCalls() {
     for (let step = 0; step < 1000; step++) {
-        await sleep(10);
+        setTimeout(doNothing, 1000);
         sendTransaction();
       }
       console.log('crazy time');
-
 }
 
 setInterval(function(){sendTransaction();},550);
