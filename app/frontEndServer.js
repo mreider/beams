@@ -1,6 +1,17 @@
 const request = require('request');
+const winston = require('winston');
+const schedule = require('node-schedule');
 const uuid = require('uuid');
 var uuid_instance = uuid.v4();
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console()
+    ]
+});
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 function sendTransaction() {
     request.post(
@@ -8,42 +19,32 @@ function sendTransaction() {
         { json: { payload: uuid_instance } },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                console.log(body);
+                logger.info(body);
             }
             else {
-                console.log(error);
+                logger.info(error);
             }
         }
     );
 }
 
 
-function randomIntFromInterval(min, max) { // min and max included 
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
+const crazy_rule = new schedule.RecurrenceRule();
+crazy_rule.hour = [9,14,21];
+crazy_rule.minute = 30;
+
+const normal_time = schedule.scheduleJob('*/5 * * * * *', function(){
+  sendTransaction();
+});
+
+const crazy_time = schedule.scheduleJob({hour: crazy_rule.hour, minute: crazy_rule.minute}, function() {
+    loopingCalls();
+  });
   
-const rndMinutes = randomIntFromInterval(11, 59)
-
-function tick() {
-    //get the mins of the current time
-    var mins = new Date().getMinutes();
-    if (mins == rndMinutes) {
-      loopingCalls();
-    }
-  }
-  
-setInterval(tick, 1000);
-
-function doNothing(){
-    return 1;
-}
-
-function loopingCalls() {
+async function loopingCalls() {
     for (let step = 0; step < 1000; step++) {
-        setTimeout(doNothing, 2);
+        await sleep(300);
         sendTransaction();
       }
-      console.log('crazy time');
+      logger.info('crazy time');
 }
-
-setInterval(function(){sendTransaction();},1000);

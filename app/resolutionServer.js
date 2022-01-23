@@ -1,9 +1,15 @@
 const express = require('express');
 const request = require('request');
+const winston = require('winston');
 const uuid = require('uuid');
 const app = express();
 const port = 3000;
 var uuid_instance = uuid.v4();
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console()
+    ]
+});
 
 require('./db');
 const Resolution = require('./resolve');
@@ -21,10 +27,10 @@ app.post('/resolution', (req, res) => {
             { json: { payload: uuid_instance } },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    return 1;
+                    logger.info(body);
                 }
                 else {
-                    return 0;
+                    
                 }
             }
         );
@@ -44,5 +50,5 @@ app.get('/resolutions', (req, res) => {
 
 
 app.listen(port, () => {
-     console.log('resolution service running on port 3000');
+    logger.info('transaction service running on port 3000');
 })

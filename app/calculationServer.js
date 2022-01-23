@@ -1,28 +1,29 @@
 const express = require('express');
 const request = require('request');
+const winston = require('winston');
+const schedule = require('node-schedule');
 const uuid = require('uuid');
 const app = express();
 const port = 3000;
 var uuid_instance = uuid.v4();
 require('./db');
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console()
+    ]
+});
 
 const Calculation = require('./calculate');
 app.use(express.json())
 
-function randomIntFromInterval(min, max) { // min and max included 
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
-  
-const rndMinutes = randomIntFromInterval(11, 59)
 
-function tick() {
-    //get the mins of the current time
-    var mins = new Date().getMinutes();
-    if (mins == rndMinutes) {
-      bleed();
-    }
-  }
-  
+const rule = new schedule.RecurrenceRule();
+rule.hour = [9,14,21];
+rule.minute = 30;
+
+const bleed_time = schedule.scheduleJob({hour: rule.hour, minute: rule.minute}, function() {
+    bleed();
+});
 
 function bleed() {
     setTimeout(bleed, Math.random() * 50000)
@@ -32,7 +33,6 @@ function bleed() {
   }
 
 app.post('/calculation', (req, res) => {
-    setInterval(tick, 1000);
     const newCalculation = new Calculation({...req.body});
     newCalculation.save().then(() => {
         res.sendStatus(200);
@@ -44,14 +44,14 @@ app.post('/calculation', (req, res) => {
             { json: { payload: uuid_instance } },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    return 1;
+                    logger.info(body);
                 }
                 else {
-                    return 0;
+                    logger.info(error);
                 }
             }
         );
-        console.log('calculated');
+        logger.info("calculation successful");
 })
 
 app.get('/calculations', (req, res) => {
@@ -67,5 +67,5 @@ app.get('/calculations', (req, res) => {
 })
 
 app.listen(port, () => {
-     console.log(`calculation service running on port 3000`);
+    logger.info('calculation service running on port 3000');
 })

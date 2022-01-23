@@ -1,10 +1,16 @@
 const express = require('express');
 const request = require('request');
+const winston = require('winston');
 const uuid = require('uuid');
 const app = express();
 const port = 3000;
 var uuid_instance = uuid.v4();
 app.use(express.json())
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console()
+    ]
+});
 
 app.post('/calculate', (req, res) => {
         res.sendStatus(200);
@@ -13,15 +19,15 @@ app.post('/calculate', (req, res) => {
             { json: { payload: uuid_instance } },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    return 1;
+                    logger.info(body);
                 }
                 else {
-                    return 0;
+                    logger.info(error);
                 }
             }
         );
 });
 
  app.listen(port, () => {
-    console.log('transaction service running on port 3000');
+    logger.info('transaction service running on port 3000');
 })

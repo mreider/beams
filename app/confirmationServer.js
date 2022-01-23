@@ -1,9 +1,13 @@
 const express = require('express');
+const winston = require('winston');
 const port = 3000;
 const app = express();
 app.use(express.json())
-
-var desiredLoadFactor = .5;
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console()
+    ]
+});
 
 function blockCpuFor(ms) {
 	var now = new Date().getTime();
@@ -18,7 +22,7 @@ function blockCpuFor(ms) {
 function start() {
 	shouldRun = true;
 	blockCpuFor(1000*desiredLoadFactor);
-	setTimeout(start, 1000* (1 - desiredLoadFactor));
+	setTimeout(start, 1000* (1 - .5));
 }
 
 app.post('/confirmation', (req, res) => {
@@ -27,5 +31,5 @@ app.post('/confirmation', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`calculation service running on port 3000`);
+    logger.info('confirmation service running on port 3000');
 })
