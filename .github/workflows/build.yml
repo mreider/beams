@@ -38,8 +38,8 @@ jobs:
           name: Check out code
         - name: Update deployment file (staging)
           run: |
-            find ./kubernetes -type f -name '*.yaml' -exec sed -i -E 's|image: ([a-z]*) *$|image: ghcr.io/mreider/\1:<TAG>|' {} \;
-            find ./kubernetes -type f -name '*.yaml' -exec sed -i 's|<TAG>|'${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}'|' {} \;
+            find kubernetes/ -type f -name '*.yaml' -exec sed -i -E 's|image: ([a-z]*) *$|image: ghcr.io/mreider/\1:<TAG>|' {} \;
+            find kubernetes/ -type f -name '*.yaml' -exec sed -i 's|<TAG>|'${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}'|' {} \;
             rm -rf kubernetes_generated/*;
             cp -rf kubernetes/. kubernetes_generated/
         - name: Update deployment files
