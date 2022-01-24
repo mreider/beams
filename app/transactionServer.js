@@ -7,6 +7,10 @@ const port = 3000;
 var uuid_instance = uuid.v4();
 app.use(express.json())
 const logger = winston.createLogger({
+	format: format.combine(
+		format.timestamp(),
+		format.json()
+	),
     transports: [
         new winston.transports.Console()
     ]

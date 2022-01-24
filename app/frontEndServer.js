@@ -4,6 +4,10 @@ const schedule = require('node-schedule');
 const uuid = require('uuid');
 var uuid_instance = uuid.v4();
 const logger = winston.createLogger({
+	format: format.combine(
+		format.timestamp(),
+		format.json()
+	),
     transports: [
         new winston.transports.Console()
     ]

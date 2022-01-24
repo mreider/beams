@@ -8,6 +8,10 @@ const port = 3000;
 var uuid_instance = uuid.v4();
 require('./db');
 const logger = winston.createLogger({
+	format: format.combine(
+		format.timestamp(),
+		format.json()
+	),
     transports: [
         new winston.transports.Console()
     ]

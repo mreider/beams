@@ -4,6 +4,10 @@ const port = 3000;
 const app = express();
 app.use(express.json())
 const logger = winston.createLogger({
+	format: format.combine(
+		format.timestamp(),
+		format.json()
+	),
     transports: [
         new winston.transports.Console()
     ]
@@ -12,7 +16,6 @@ const logger = winston.createLogger({
 app.post('/confirmation', (req, res) => {
     res.sendStatus(200);
 	logger.info('confirmed');
-    start();
 })
 
 app.listen(port, () => {
