@@ -1,4 +1,5 @@
 const express = require('express');
+var winston = require('winston');
 const {transports, createLogger, format} = require('winston');
 const port = 3000;
 const app = express();

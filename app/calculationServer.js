@@ -1,5 +1,6 @@
 const express = require('express');
 const request = require('request');
+var winston = require('winston');
 const {transports, createLogger, format} = require('winston');
 const schedule = require('node-schedule');
 const uuid = require('uuid');

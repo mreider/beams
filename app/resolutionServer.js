@@ -1,5 +1,6 @@
 const express = require('express');
 const request = require('request');
+var winston = require('winston');
 const {transports, createLogger, format} = require('winston');
 const uuid = require('uuid');
 const app = express();
