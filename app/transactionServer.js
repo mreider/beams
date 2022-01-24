@@ -1,6 +1,6 @@
 const express = require('express');
 const request = require('request');
-const winston = require('winston');
+const {transports, createLogger, format} = require('winston');
 const uuid = require('uuid');
 const app = express();
 const port = 3000;

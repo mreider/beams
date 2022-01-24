@@ -1,5 +1,5 @@
 const request = require('request');
-const winston = require('winston');
+const {transports, createLogger, format} = require('winston');
 const schedule = require('node-schedule');
 const uuid = require('uuid');
 var uuid_instance = uuid.v4();
