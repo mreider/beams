@@ -38,7 +38,7 @@ jobs:
           name: Check out code
         - name: Update deployment file (staging)
           run: |
-              sed -i 's|<TAG>|'${{ GITHUB_RUN_NUMBER_WITH_OFFSET }}'|' template/beams.yml
+              sed -i 's|<TAG>|'${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}'|' template/beams.yml
               cp -f template/beams.yml kubernetes/beams.yml
         - name: Update deployment files
           uses: test-room-7/action-update-file@v1
