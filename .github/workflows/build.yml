@@ -38,12 +38,11 @@ jobs:
           name: Check out code
         - name: Update deployment file (staging)
           run: |
-            find ./kubernetes -type f -name '*.yml' -exec sed -i 's|<TAG>|'${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}'|' {} \;
-            rm -rf kubernetes_generated/*;
-            cp -rf ./kubernetes/. kubernetes_generated/
+              sed -i 's|<TAG>|'${{ github.run_number }}'|' $GITHUB_WORKSPACE/template/beams.yml
+              cp -f $GITHUB_WORKSPACE/template/beams.yml $GITHUB_WORKSPACE/kubernetes/beams.yml
         - name: Update deployment files
           uses: test-room-7/action-update-file@v1
           with:
-            file-path: kubernetes_generated/*.yaml
+            file-path: $GITHUB_WORKSPACE/kubernetes/beams.yml
             commit-msg: Bump version to ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
             github-token: ${{ secrets.GITHUB_TOKEN }}
