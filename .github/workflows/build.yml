@@ -22,3 +22,14 @@ jobs:
           password: ${{ secrets.GH_TOKEN }} 
           directory: ./app
           dockerfile: ./app/Dockerfile
+      - name: Run kustomize
+        run: |
+          kustomize edit set image beams=ghcr.io/mreider/beams:${{ github.run_number }}
+          kustomize build
+      - name: Update deployment files
+        uses: test-room-7/action-update-file@v1
+        with:
+          file-path: kubernetes/beams.yaml
+          commit-msg: image tag update to ${{ github.run_number }}
+          github-token: ${{ secrets.GH_TOKEN }}
+    
