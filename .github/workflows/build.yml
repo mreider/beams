@@ -25,7 +25,7 @@ jobs:
       - name: Run kustomize
         run: |
           kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ github.run_number }}
-          kustomize build > kubernetes/beams.yaml
+          kustomize build -o kubernetes/beams.yaml
       - name: Update deployment files
         uses: test-room-7/action-update-file@v1
         with:
