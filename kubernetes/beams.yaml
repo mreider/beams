@@ -60,7 +60,7 @@ spec:
         app: transactions
     spec:
       containers:
-      - name: transactions
+      - name: beams
         image: ghcr.io/mreider/beams:39
         resources:
           requests:
@@ -93,7 +93,7 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: frontend
+      - name: beams
         image: ghcr.io/mreider/beams:39
         resources:
           requests:
@@ -127,7 +127,7 @@ spec:
     spec:
       priorityClassName: high-priority
       containers:
-      - name: calculations
+      - name: beams
         image: ghcr.io/mreider/beams:39
         command:
           - node
@@ -160,7 +160,7 @@ spec:
         app: confirmations
     spec:
       containers:
-      - name: confirmations
+      - name: beams
         image: ghcr.io/mreider/beams:39
         command:
           - node
@@ -193,7 +193,7 @@ spec:
         app: resolutions
     spec:
       containers:
-      - name: resolutions
+      - name: beams
         image: ghcr.io/mreider/beams:39
         command:
           - node
@@ -308,7 +308,7 @@ metadata:
 spec:
   serviceAccountName: podkiller
   containers:
-    - name: podkiller
+    - name: beams
       image: ghcr.io/mreider/beams:39
       command:
             - node

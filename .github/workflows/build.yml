@@ -12,7 +12,7 @@ jobs:
         with:
           ref: '${{ github.event.inputs.branch}}'
       - uses: mr-smithers-excellent/docker-build-push@v5
-        name: Build and Publish Frontend
+        name: Build and publish image
         with:
           image: beams
           tags: ${{ github.run_number }}, latest
