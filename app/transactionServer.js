@@ -24,7 +24,7 @@ app.post('/calculate', (req, res) => {
             { json: { payload: uuid_instance } },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    logger.info(body);
+                    logger.info("calcuation successful");
                 }
                 else {
                     logger.info(error);

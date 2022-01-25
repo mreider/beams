@@ -61,7 +61,7 @@ spec:
     spec:
       containers:
       - name: transactions
-        image: ghcr.io/mreider/beams:37
+        image: ghcr.io/mreider/beams:38
         resources:
           requests:
             cpu: 100m
@@ -94,7 +94,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ghcr.io/mreider/beams:37
+        image: ghcr.io/mreider/beams:38
         resources:
           requests:
             cpu: 100m
@@ -128,7 +128,7 @@ spec:
       priorityClassName: high-priority
       containers:
       - name: calculations
-        image: ghcr.io/mreider/beams:37
+        image: ghcr.io/mreider/beams:38
         command:
           - node
           - "calculationServer.js"
@@ -161,7 +161,7 @@ spec:
     spec:
       containers:
       - name: confirmations
-        image: ghcr.io/mreider/beams:37
+        image: ghcr.io/mreider/beams:38
         command:
           - node
           - "confirmationServer.js"
@@ -194,7 +194,7 @@ spec:
     spec:
       containers:
       - name: resolutions
-        image: ghcr.io/mreider/beams:37
+        image: ghcr.io/mreider/beams:38
         command:
           - node
           - "resolutionServer.js"
@@ -309,7 +309,7 @@ spec:
   serviceAccountName: podkiller
   containers:
     - name: podkiller
-      image: ghcr.io/mreider/beams:37
+      image: ghcr.io/mreider/beams:38
       command:
             - node
             - "podkiller.js"
