@@ -31,5 +31,5 @@ jobs:
         with:
           file-path: kubernetes/beams.yaml
           commit-msg: image tag update to ${{ github.run_number }}
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
     
