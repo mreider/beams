@@ -30,13 +30,15 @@ jobs:
           dockerfile: ./app/Dockerfile
       - name: Run kustomize
         run: |
-          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
+          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},
           kustomize build -o kubernetes/beams.yaml
           kustomize build -o second-beams.yaml
       - name: Update deployment files
         uses: test-room-7/action-update-file@v1
         with:
-          file-path: kubernetes/beams.yaml
+          file-path: |
+            kubernetes/beams.yaml
+            second-beams.yaml
           commit-msg: image tag update to ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},
           github-token: ${{ secrets.GITHUB_TOKEN }}
     

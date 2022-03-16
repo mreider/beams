@@ -139,7 +139,7 @@ spec:
       - command:
         - node
         - calculationServer.js
-        image: ghcr.io/mreider/beams:,:2
+        image: ghcr.io/mreider/beams
         name: calculations
         ports:
         - containerPort: 3000
