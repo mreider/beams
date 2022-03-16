@@ -139,7 +139,7 @@ spec:
       - command:
         - node
         - calculationServer.js
-        image: ghcr.io/mreider/beams:110
+        image: ghcr.io/mreider/beams:111
         name: calculations
         ports:
         - containerPort: 3000
@@ -173,7 +173,7 @@ spec:
       - command:
         - node
         - confirmationServer.js
-        image: ghcr.io/mreider/beams:110
+        image: ghcr.io/mreider/beams:111
         name: confirmations
         ports:
         - containerPort: 3000
@@ -206,7 +206,7 @@ spec:
       - command:
         - node
         - frontEndServer.js
-        image: ghcr.io/mreider/beams:110
+        image: ghcr.io/mreider/beams:111
         name: frontend
         ports:
         - containerPort: 3000
@@ -271,7 +271,7 @@ spec:
       - command:
         - node
         - resolutionServer.js
-        image: ghcr.io/mreider/beams:110
+        image: ghcr.io/mreider/beams:111
         name: resolutions
         ports:
         - containerPort: 3000
@@ -304,7 +304,7 @@ spec:
       - command:
         - node
         - transactionServer.js
-        image: ghcr.io/mreider/beams:110
+        image: ghcr.io/mreider/beams:111
         name: transactions
         ports:
         - containerPort: 3000
@@ -341,7 +341,7 @@ spec:
   - command:
     - node
     - randomizer.js
-    image: ghcr.io/mreider/beams:110
+    image: ghcr.io/mreider/beams:111
     name: randomizer
     resources:
       limits:
