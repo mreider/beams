@@ -7,6 +7,7 @@ const uuid = require('uuid');
 const app = express()
 const port = 3000
 app.use(express.static(__dirname + '/public'));
+
 var uuid_instance = uuid.v4();
 const logger = winston.createLogger({
 	format: format.combine(
@@ -61,3 +62,5 @@ async function loopingCalls() {
       }
       logger.info('crazy time');
 }
+
+app.listen(PORT,'0.0.0.0');

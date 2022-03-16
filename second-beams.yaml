@@ -241,7 +241,7 @@ kind: Ingress
 metadata:
   name: frontend
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: finance-ip
+    kubernetes.io/ingress.global-static-ip-name: finance2-ip
   labels:
     app: frontend
 spec:
@@ -261,7 +261,7 @@ spec:
     app: frontend
     tier: web
   ports:
-  - port: 3000
+  - port: 3001
     targetPort: 3000
 ---
 apiVersion: apps/v1

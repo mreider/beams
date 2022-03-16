@@ -23,13 +23,17 @@ jobs:
           directory: ./app
           dockerfile: ./app/Dockerfile
       - name: Run kustomize
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: True
         run: |
-          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ github.run_number }}
+          NUM: ${{ github.run_number }}
+          echo ::set-env name=GITHUB_RUN_NUMBER_WITH_OFFSET::$(($NUM+100))
+          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},
           kustomize build -o kubernetes/beams.yaml
       - name: Update deployment files
         uses: test-room-7/action-update-file@v1
         with:
           file-path: kubernetes/beams.yaml
-          commit-msg: image tag update to ${{ github.run_number }}
+          commit-msg: image tag update to ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},
           github-token: ${{ secrets.GITHUB_TOKEN }}
     
