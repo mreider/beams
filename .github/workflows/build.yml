@@ -12,10 +12,15 @@ jobs:
         with:
           ref: '${{ github.event.inputs.branch}}'
       - uses: mr-smithers-excellent/docker-build-push@v5
+        env:
+            NUM: ${{ github.run_number }}
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: True
+        run: |
+          echo ::set-env name=GITHUB_RUN_NUMBER_WITH_OFFSET::$(($NUM+100))
         name: Build and publish image
         with:
           image: beams
-          tags: ${{ github.run_number }}, latest
+          tags: ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},latest
           registry: ghcr.io
           githubOrg: mreider
           username: ${{ github.actor }}
@@ -23,12 +28,8 @@ jobs:
           directory: ./app
           dockerfile: ./app/Dockerfile
       - name: Run kustomize
-        env:
-          NUM: ${{ github.run_number }}
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: True
         run: |
-          echo ::set-env name=GITHUB_RUN_NUMBER_WITH_OFFSET::$(($NUM+100))
-          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},
+          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
           kustomize build -o kubernetes/beams.yaml
       - name: Update deployment files
         uses: test-room-7/action-update-file@v1

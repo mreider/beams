@@ -326,9 +326,11 @@ metadata:
     app: frontend
   name: frontend
 spec:
-  backend:
-    serviceName: frontend
-    servicePort: 3001
+  defaultBackend:
+    service:
+      name: frontend
+      port:
+        number: 3000
 ---
 apiVersion: v1
 kind: Pod
