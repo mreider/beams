@@ -30,7 +30,7 @@ jobs:
           dockerfile: ./app/Dockerfile
       - name: Run kustomize
         run: |
-          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},
+          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
           kustomize build -o kubernetes/beams.yaml
           kustomize build -o second-beams.yaml
       - name: Update deployment files
