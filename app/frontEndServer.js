@@ -1,8 +1,12 @@
 const request = require('request');
+const express = require('express')
 var winston = require('winston');
 const {transports, createLogger, format} = require('winston');
 const schedule = require('node-schedule');
 const uuid = require('uuid');
+const app = express()
+const port = 3000
+app.use(express.static(__dirname + '/public'));
 var uuid_instance = uuid.v4();
 const logger = winston.createLogger({
 	format: format.combine(
@@ -13,6 +17,10 @@ const logger = winston.createLogger({
         new winston.transports.Console()
     ]
 });
+
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Hey', message: 'Hello there!' })
+  })
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

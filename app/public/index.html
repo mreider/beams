@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>beams</title>
+  <style>
+      body {
+  overflow: hidden;
+  }
+  html {
+  background: #111;
+  }
+  #laser_container {width:100%;height:100%;overflow:hidden;}
+  .laser-beam {
+  position: absolute;
+  left: 50%;
+  bottom: -50px;
+  width: 10px;
+  height: 500%;
+  background: rgba(99, 195, 231, 0.6);
+  -webkit-box-shadow: 0px 0px 15px 0px #63c3e7;
+  -moz-box-shadow: 0px 0px 15px 0px #63c3e7;
+  box-shadow: 0px 0px 15px 0px #63c3e7;
+  -moz-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-animation: laser 7s infinite;
+  }
+  .laser-beam.red {
+  -webkit-animation: laser 7.5s infinite;
+  background: rgba(236, 19, 65, 0.6);
+  -webkit-box-shadow: 0px 0px 15px 0px #ec1341;
+  -moz-box-shadow: 0px 0px 15px 0px #ec1341;
+  box-shadow: 0px 0px 15px 0px #ec1341;
+  }
+  .laser-beam.purple {
+  -webkit-animation: laser 7.3s infinite;
+  background: rgba(204, 102, 255, 0.6);
+  -webkit-box-shadow: 0px 0px 15px 0px #cc66ff;
+  -moz-box-shadow: 0px 0px 15px 0px #cc66ff;
+  box-shadow: 0px 0px 15px 0px #cc66ff;
+  }
+  .laser-beam.green {
+  -webkit-animation: laser 7.7s infinite;
+  background: rgba(86, 212, 69, 0.6);
+  -webkit-box-shadow: 0px 0px 15px 0px #56d445;
+  -moz-box-shadow: 0px 0px 15px 0px #56d445;
+  box-shadow: 0px 0px 15px 0px #56d445;
+  }
+
+  @-webkit-keyframes laser {
+  0% {
+    -moz-transform: rotate(-75deg);
+    -ms-transform: rotate(-75deg);
+    -webkit-transform: rotate(-75deg);
+    transform: rotate(-75deg);
+  }
+  50% {
+    -moz-transform: rotate(75deg);
+    -ms-transform: rotate(75deg);
+    -webkit-transform: rotate(75deg);
+    transform: rotate(75deg);
+  }
+  100% {
+    -moz-transform: rotate(-75deg);
+    -ms-transform: rotate(-75deg);
+    -webkit-transform: rotate(-75deg);
+    transform: rotate(-75deg);
+  }
+  }
+  </style>
+</head>
+<body>
+  <div id="laser_container">
+    <div class="laser-beam"></div>
+    <div class="laser-beam red"></div>
+    <div class="laser-beam purple"></div>
+    <div class="laser-beam green"></div>
+  </div>
+</body>
+</html>
