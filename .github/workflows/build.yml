@@ -24,9 +24,9 @@ jobs:
           dockerfile: ./app/Dockerfile
       - name: Run kustomize
         env:
+          NUM: ${{ github.run_number }}
           ACTIONS_ALLOW_UNSECURE_COMMANDS: True
         run: |
-          NUM: ${{ github.run_number }}
           echo ::set-env name=GITHUB_RUN_NUMBER_WITH_OFFSET::$(($NUM+100))
           kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},
           kustomize build -o kubernetes/beams.yaml
