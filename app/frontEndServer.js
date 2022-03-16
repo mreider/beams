@@ -5,7 +5,6 @@ const {transports, createLogger, format} = require('winston');
 const schedule = require('node-schedule');
 const uuid = require('uuid');
 const app = express()
-const port = 3000
 app.use(express.static(__dirname + '/public'));
 
 var uuid_instance = uuid.v4();
@@ -63,4 +62,4 @@ async function loopingCalls() {
       logger.info('crazy time');
 }
 
-app.listen(PORT,'0.0.0.0');
+app.listen(3000,'0.0.0.0');
