@@ -139,7 +139,7 @@ spec:
       - command:
         - node
         - calculationServer.js
-        image: ghcr.io/mreider/beams:111
+        image: ghcr.io/mreider/beams:112
         name: calculations
         ports:
         - containerPort: 3000
@@ -173,7 +173,7 @@ spec:
       - command:
         - node
         - confirmationServer.js
-        image: ghcr.io/mreider/beams:111
+        image: ghcr.io/mreider/beams:112
         name: confirmations
         ports:
         - containerPort: 3000
@@ -206,7 +206,7 @@ spec:
       - command:
         - node
         - frontEndServer.js
-        image: ghcr.io/mreider/beams:111
+        image: ghcr.io/mreider/beams:112
         name: frontend
         ports:
         - containerPort: 3000
@@ -271,7 +271,7 @@ spec:
       - command:
         - node
         - resolutionServer.js
-        image: ghcr.io/mreider/beams:111
+        image: ghcr.io/mreider/beams:112
         name: resolutions
         ports:
         - containerPort: 3000
@@ -304,7 +304,7 @@ spec:
       - command:
         - node
         - transactionServer.js
-        image: ghcr.io/mreider/beams:111
+        image: ghcr.io/mreider/beams:112
         name: transactions
         ports:
         - containerPort: 3000
@@ -317,21 +317,6 @@ spec:
             cpu: 100m
             memory: 32Mi
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: finance-ip
-  labels:
-    app: frontend
-  name: frontend
-spec:
-  defaultBackend:
-    service:
-      name: frontend
-      port:
-        number: 3000
----
 apiVersion: v1
 kind: Pod
 metadata:
@@ -341,7 +326,7 @@ spec:
   - command:
     - node
     - randomizer.js
-    image: ghcr.io/mreider/beams:111
+    image: ghcr.io/mreider/beams:112
     name: randomizer
     resources:
       limits:
