@@ -126,7 +126,7 @@ metadata:
     app: calculations
   name: calculations
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: calculations
@@ -139,7 +139,7 @@ spec:
       - command:
         - node
         - calculationServer.js
-        image: ghcr.io/mreider/beams:112
+        image: ghcr.io/mreider/beams:113
         name: calculations
         ports:
         - containerPort: 3000
@@ -173,7 +173,7 @@ spec:
       - command:
         - node
         - confirmationServer.js
-        image: ghcr.io/mreider/beams:112
+        image: ghcr.io/mreider/beams:113
         name: confirmations
         ports:
         - containerPort: 3000
@@ -193,7 +193,7 @@ metadata:
     app: frontend
   name: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -206,7 +206,7 @@ spec:
       - command:
         - node
         - frontEndServer.js
-        image: ghcr.io/mreider/beams:112
+        image: ghcr.io/mreider/beams:113
         name: frontend
         ports:
         - containerPort: 3000
@@ -271,7 +271,7 @@ spec:
       - command:
         - node
         - resolutionServer.js
-        image: ghcr.io/mreider/beams:112
+        image: ghcr.io/mreider/beams:113
         name: resolutions
         ports:
         - containerPort: 3000
@@ -291,7 +291,7 @@ metadata:
     app: transactions
   name: transactions
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: transactions
@@ -304,7 +304,7 @@ spec:
       - command:
         - node
         - transactionServer.js
-        image: ghcr.io/mreider/beams:112
+        image: ghcr.io/mreider/beams:113
         name: transactions
         ports:
         - containerPort: 3000
@@ -326,7 +326,7 @@ spec:
   - command:
     - node
     - randomizer.js
-    image: ghcr.io/mreider/beams:112
+    image: ghcr.io/mreider/beams:113
     name: randomizer
     resources:
       limits:
