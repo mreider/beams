@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: sampleApp-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: finance2-ip
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "true"
+  labels:
+    app: frontend
+spec:
+  tls: # < placing a host in the TLS config will indicate a certificate should be created
+  - hosts:
+    - dynakube.com
+    secretName: sampleApp-cert-secret # < cert-manager will store the created certificate in this secret
+  defaultBackend:
+    service:
+      name: frontend
+      port:
+        number: 80
+---
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: myapp-frontend-config
+spec:
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT

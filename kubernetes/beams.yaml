@@ -61,12 +61,10 @@ metadata:
   name: frontend
 spec:
   ports:
-  - port: 3000
+  - port: 80
     targetPort: 3000
   selector:
     app: frontend
-    tier: web
-  type: NodePort
 ---
 apiVersion: v1
 kind: Service
