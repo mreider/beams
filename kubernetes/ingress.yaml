@@ -13,11 +13,14 @@ spec:
   - hosts:
     - dynakube.com
     secretName: sampleApp-cert-secret # < cert-manager will store the created certificate in this secret
-  defaultBackend:
-    service:
-      name: frontend
-      port:
-        number: 80
+  rules:
+  - host: dynakube.com
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: frontend
+          servicePort: 80
 ---
 apiVersion: networking.gke.io/v1beta1
 kind: FrontendConfig
