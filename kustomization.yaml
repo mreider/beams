@@ -1,0 +1,8 @@
+resources:
+- kubernetes/beams.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: ghcr.io/mreider/beams
+  newName: ghcr.io/mreider/beams
+  newTag: foo
