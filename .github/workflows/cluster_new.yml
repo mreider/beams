@@ -1,0 +1,21 @@
+name: build a new cluster
+on: 
+  workflow_dispatch:
+    inputs:
+        environment:
+          description: 'GKE cluster name'     
+          required: true
+jobs:
+  build-and-publish:
+    name: make it so
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup gcloud CLI
+      uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+      with:
+        service_account_key: ${{ secrets.GKE_SA_KEY }}
+        project_id: ${{ secrets.GKE_PROJECT }}
+    - name: Create a new cluster
+    gcloud container clusters create example-cluster --zone us-central1-a --additional-zones us-central1-b,us-central1-c

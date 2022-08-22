@@ -1,0 +1,44 @@
+on: 
+  push:
+      branches:
+        - main
+jobs:
+  build-and-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set stuff up
+        env:
+            NUM: ${{ github.run_number }}
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: True
+        run: |
+          echo ::set-env name=GITHUB_RUN_NUMBER_WITH_OFFSET::$(($NUM+100))
+      - uses: actions/checkout@v2.3.2
+        name: Check out code
+        with:
+          ref: '${{ github.event.inputs.branch}}'
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build and publish image
+        with:
+          image: beams
+          tags: ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},latest
+          registry: ghcr.io
+          githubOrg: mreider
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }} 
+          directory: ./app
+          dockerfile: ./app/Dockerfile
+      - name: Run kustomize
+        run: |
+          kustomize edit set image ghcr.io/mreider/beams=ghcr.io/mreider/beams:${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
+          kustomize build -o kubernetes/beams.yaml
+          kustomize build -o second-beams.yaml
+      - name: Update deployment files
+        uses: test-room-7/action-update-file@v1
+        with:
+          file-path: |
+            kubernetes/beams.yaml
+            second-beams.yaml
+          commit-msg: image tag update to ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }},
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+    
