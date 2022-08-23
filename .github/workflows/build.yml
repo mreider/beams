@@ -12,7 +12,7 @@ jobs:
             NUM: ${{ github.run_number }}
             ACTIONS_ALLOW_UNSECURE_COMMANDS: True
         run: |
-          echo ::set-env name=GITHUB_RUN_NUMBER_WITH_OFFSET::$(($NUM+100))
+          echo ::set-env name=GITHUB_RUN_NUMBER_WITH_OFFSET::$(($NUM+140))
       - uses: actions/checkout@v2.3.2
         name: Check out code
         with:
