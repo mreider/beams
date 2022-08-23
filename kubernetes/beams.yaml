@@ -139,7 +139,7 @@ spec:
         - --require
         - .\opentelemetry.js
         - calculationServer.js
-        image: ghcr.io/mreider/beams:125
+        image: ghcr.io/mreider/beams:142
         name: calculations
         ports:
         - containerPort: 3000
@@ -180,7 +180,7 @@ spec:
           value: dynatrace api url
         - name: API-TOKEN
           value: dynatrace token
-        image: ghcr.io/mreider/beams:125
+        image: ghcr.io/mreider/beams:142
         name: confirmations
         ports:
         - containerPort: 3000
@@ -220,7 +220,7 @@ spec:
           value: dynatrace api url
         - name: API-TOKEN
           value: dynatrace token
-        image: ghcr.io/mreider/beams:125
+        image: ghcr.io/mreider/beams:142
         name: frontend
         ports:
         - containerPort: 3000
@@ -292,7 +292,7 @@ spec:
           value: dynatrace api url
         - name: API-TOKEN
           value: dynatrace token
-        image: ghcr.io/mreider/beams:125
+        image: ghcr.io/mreider/beams:142
         name: resolutions
         ports:
         - containerPort: 3000
@@ -332,7 +332,7 @@ spec:
           value: dynatrace api url
         - name: API-TOKEN
           value: dynatrace token
-        image: ghcr.io/mreider/beams:125
+        image: ghcr.io/mreider/beams:142
         name: transactions
         ports:
         - containerPort: 3000
@@ -356,7 +356,7 @@ spec:
     - --require
     - .\opentelemetry.js
     - randomizer.js
-    image: ghcr.io/mreider/beams:125
+    image: ghcr.io/mreider/beams:142
     name: randomizer
     resources:
       limits:
